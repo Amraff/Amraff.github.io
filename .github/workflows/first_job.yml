@@ -5,13 +5,14 @@ on:
 
 jobs: 
     first_job: 
+        name: raff
         runs-on: ubuntu-latest
         steps:
-            - name: Welcome Message
-              run: echo "My first GitHu Actions Job"
+            - name: First message
+              run: echo "Welcome to the world of CICD  with Github Actions"
 
-            - name: List Files 
-              run: ls 
+            - name: List All Files Including Hidden
+              run: ls -1a
 
-            - name: Read file 
-              run: cat dockerfile
+            - name: Show Present Working Directory
+              run: pwd
