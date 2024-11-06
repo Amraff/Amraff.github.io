@@ -2,33 +2,45 @@ name: Docker Workflow
 
 on:
   - push
-  
+
 jobs: 
-  docker_build: 
+  docker: 
     runs-on: ubuntu-latest
-    steps: 
+    steps:
     - name: Checkout Code
       uses: actions/checkout@v4
-
-    - name: Docker Build 
-      run: docker build -t docker.io/amraff/resume-app:latest .
-
-    - name: List Docker Images
-      run: docker images
+    - name: Docker Build
+      env:
+        CONTAINER_REGISTRY: docker.io
+        DOCKER_USERNAME: amraff
+        DOCKER_PASSWORD: Morelovesweetmom@1
+        IMAGE_NAME: resume-app
+      run: echo docker build -t $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest .
+      # run: echo docker build -t ${{ env.CONTAINER_REGISTRY }}/${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
     - name: Docker Login
-      run: docker login --username=amraff --password=Morelovesweetmom@1
+      env:
+        DOCKER_USERNAME: amraff
+        DOCKER_PASSWORD: Morelovesweetmom@1
+      run: docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
 
     - name: Docker Publish 
-      run: docker push docker.io/amraff/resume-app:latest
+      env:
+        CONTAINER_REGISTRY: docker.io
+        DOCKER_USERNAME: amraff
+        IMAGE_NAME: resume-app
+      run: docker push $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
 
-  docker_deploy:
-    needs: docker_build
+  deploy:
+    needs: docker
     runs-on: ubuntu-latest 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      - name: Docker Login
-        run: docker login --username=amraff --password=Morelovesweetmom@1
-      - name: Docker Run
-        run: docker run -d -p 8080:80 docker.io/amraff/resume-app:latest
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+    - name: Docker Run
+      env:
+        CONTAINER_REGISTRY: docker.io
+        DOCKER_USERNAME: amraff
+        DOCKER_PASSWORD: Morelovesweetmom@1
+        IMAGE_NAME: resume-app
+       run: docker run -d -p 8080:80 $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
