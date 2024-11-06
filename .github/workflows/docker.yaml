@@ -11,7 +11,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Docker Build 
-      run: docker build -t docker.io/raphew/resume-app:latest .
+      run: docker build -t gresume-app:latest .
 
     - name: Docker Login
       run: docker login --username=amraff --password=Morelovesweetmom@1
