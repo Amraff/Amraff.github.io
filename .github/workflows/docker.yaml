@@ -2,6 +2,8 @@ name: Docker Workflow
 
 on:
   push: 
+    branches:
+      - demo
     paths: 
       - css/**
       - images/**
