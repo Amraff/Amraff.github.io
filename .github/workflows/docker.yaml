@@ -1,14 +1,11 @@
 name: Docker Workflow
 
 on:
-  push: 
-    branches:
-      - demo
-    paths: 
-      - css/**
-      - images/**
-      - index.html
-      - dockerfile
+  # 
+  pull request:
+    types: #[closed, opened]
+      - closed
+      - opened
   workflow_dispatch:
 
 env:
