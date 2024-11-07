@@ -1,11 +1,12 @@
 name: Docker Workflow
 
 on:
-  # 
-  pull_request:
-    types: #[closed, opened]
-      - closed
-      - opened
+  # pull_request:
+  #   types: #[closed, opened]
+  #     - closed
+  #     - opened
+  schedule:
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 env:
