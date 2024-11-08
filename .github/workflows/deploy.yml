@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
     - name: Checkout Code
-     uses: actions/checkout@v4
+      uses: actions/checkout@v4
 
     - name: Docker Build
       run: docker build -t ${{ env.CONTAINER_REGISTRY }}/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest .
